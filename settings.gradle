@@ -1,0 +1,27 @@
+pluginManagement {
+    def versions = [
+            "com.android": "4.1.1",
+            "org.jetbrains.kotlin": "1.4.32"
+    ]
+
+    resolutionStrategy {
+        eachPlugin {
+            def namespace = requested.id.namespace
+            versions.forEach { prefix, version ->
+                if (namespace?.startsWith(prefix)) {
+                    useVersion(version)
+                    if (namespace == "com.android") {
+                        useModule("com.android.tools.build:gradle:$version")
+                    }
+                }
+            }
+        }
+    }
+
+    repositories {
+        gradlePluginPortal()
+        google()
+    }
+}
+
+rootProject.name = "kinfra-logging-logcat"
