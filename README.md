@@ -29,11 +29,10 @@ class MyApplication : Application {
 
 ## Usage
 
-After the installation just use `kinfra-logging` as usual:
+After the installation, just use `kinfra-logging` as usual:
 
 ```kotlin
-class MyActivity : Activity {
-    
+class MyActivity : Activity() {
     override fun onCreate() {
         ...
         logger.info { "Created" }
@@ -44,3 +43,27 @@ class MyActivity : Activity {
     }
 }
 ```
+
+Execution of this code puts the following message into Logcat:
+```
+I/MyActivity: Created
+```
+
+## Configuration
+
+A message will be logged only if it is allowed by `Log.isLoggable(tag, level)`.
+
+By default, minimum log level on Android is `INFO`.
+To change it, set the property `log.tag` to the desired level's abbreviation:
+
+```shell
+adb shell setprop log.tag D
+```
+
+Level of a particular tag can be set via a property `log.tag.<tag>`, for example:
+
+```shell
+adb shell setprop log.tag.MyActivity D
+```
+
+Beware that these properties affect all the applications on the device.
